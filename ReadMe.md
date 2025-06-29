@@ -4,7 +4,7 @@ Play Economy Infrastructure components
 ## Add GitHub Package source 
 
 ```bash 
-owner="dotnetmicroservices001"
+owner="dotnetmicroservice001"
 gh_pat="[YOUR_PERSONAL_ACCESS_TOKEN]"
 
 dotnet nuget add source \
@@ -13,5 +13,4 @@ dotnet nuget add source \
   --store-password-in-clear-text \
   --name github \
   "https://nuget.pkg.github.com/$owner/index.json"
-
-```
+``` 
