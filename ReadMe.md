@@ -14,3 +14,9 @@ dotnet nuget add source \
   --name github \
   "https://nuget.pkg.github.com/$owner/index.json"
 ``` 
+
+## Creating Azure Resource Group 
+```bash
+export appname=playeconomy
+az group create --name $appname --location eastus
+```
