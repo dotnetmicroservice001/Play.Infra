@@ -17,6 +17,13 @@ dotnet nuget add source \
 
 ## Creating Azure Resource Group 
 ```bash
-export appname=playeconomy
-az group create --name $appname --location eastus
+export appname=playeconomy-01
+az group create --name $appname --location westus
+```
+
+## Creating CosmosDB Account 
+```bash
+export appname=playeconomy-01
+export db=playeconomy-01-db
+az cosmosdb create --name $db --resource-group $appname --kind MongoDB --enable-free-tier
 ```
