@@ -27,3 +27,9 @@ export appname=playeconomy-01
 export db=playeconomy-01-db
 az cosmosdb create --name $db --resource-group $appname --kind MongoDB --enable-free-tier
 ```
+
+## Creating the Service Bus Namespace 
+```bash 
+export appname=playeconomy-01
+az servicebus namespace create --name $appname --resource-group $appname --sku Standard
+```
