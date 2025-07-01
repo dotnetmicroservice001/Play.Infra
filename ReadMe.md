@@ -33,3 +33,9 @@ az cosmosdb create --name $db --resource-group $appname --kind MongoDB --enable-
 export appname=playeconomy-01
 az servicebus namespace create --name $appname --resource-group $appname --sku Standard
 ```
+## Creating Container Registry 
+```bash
+export appname=playeconomy-01
+export acr="playeconomy01acr"
+az acr create --name $acr --resource-group $appname --sku Basic
+```
