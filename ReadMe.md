@@ -39,3 +39,11 @@ export appname=playeconomy-01
 export acr="playeconomy01acr"
 az acr create --name $acr --resource-group $appname --sku Basic
 ```
+
+## Creating AKS cluster
+```bash 
+az aks create -n $appname -g $appname --node-vm-size Standard_B2s --node-count 2 --attach-acr $acr \
+   --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys
+
+az aks get-credentials --name $appname --resource-group $appname
+```
