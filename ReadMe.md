@@ -47,3 +47,8 @@ az aks create -n $appname -g $appname --node-vm-size Standard_B2s --node-count 2
 
 az aks get-credentials --name $appname --resource-group $appname
 ```
+## Creating Azure Key Vault 
+```bash 
+az keyvault create -n $appname -g $appname 
+
+```
