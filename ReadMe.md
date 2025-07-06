@@ -88,3 +88,9 @@ helm install \
   --version v1.18.2 \
   --set crds.enabled=true
 ```
+
+## Creating Cluster Issure
+```bash
+kubectl apply -f ./cert-manager/cluster-issuer.yaml -n "$namespace"
+```
+
