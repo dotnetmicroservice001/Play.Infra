@@ -92,5 +92,9 @@ helm install \
 ## Creating Cluster Issure
 ```bash
 kubectl apply -f ./cert-manager/cluster-issuer.yaml -n "$namespace"
+kubectl apply -f ./cert-manager/acme-challenge.yaml -n "$namespace"
 ```
-
+## Creating TLS certificate 
+```bash 
+kubectl apply -f ./emissary-ingress/tls-certificate.yaml -n "$namespace"
+```
