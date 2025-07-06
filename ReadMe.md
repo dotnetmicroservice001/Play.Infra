@@ -71,3 +71,8 @@ kubectl -n $namespace wait --for condition=available --timeout=90s deploy -lapp.
 
 kubectl get svc -w  --namespace emissary emissary-ingress
 ```
+
+## Configuring Emissary-ingress routing
+```bash 
+kubectl apply -f ./emissary-ingress/listener.yaml -n $namespace
+```
