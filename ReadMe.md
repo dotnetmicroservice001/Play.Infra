@@ -75,4 +75,5 @@ kubectl get svc -w  --namespace emissary emissary-ingress
 ## Configuring Emissary-ingress routing
 ```bash 
 kubectl apply -f ./emissary-ingress/listener.yaml -n $namespace
+kubectl apply -f ./emissary-ingress/mappings.yaml -n $namespace
 ```
