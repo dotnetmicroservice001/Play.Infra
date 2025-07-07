@@ -1,0 +1,11 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: playeconomy-01-host
+spec: 
+  hostname: playeconomy-01.westus.cloudapp.azure.com
+  acmeProvider: 
+    email: sneha.basnet@sjsu.edu
+  tlsSecret: 
+    name: playeconomy-tls
+    

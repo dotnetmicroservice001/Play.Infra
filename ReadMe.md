@@ -98,3 +98,7 @@ kubectl apply -f ./cert-manager/acme-challenge.yaml -n "$namespace"
 ```bash 
 kubectl apply -f ./emissary-ingress/tls-certificate.yaml -n "$namespace"
 ```
+## Enabling TLS and HTTPS 
+```bash
+kubectl apply -f ./emissary-ingress/host.yaml -n "$namespace"
+```

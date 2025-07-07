@@ -10,3 +10,18 @@ spec:
   hostBinding:
     namespace:
       from: SELF
+      
+---
+
+apiVersion: getambassador.io/v3alpha1
+kind: Listener
+metadata:
+  name: https-listener-8443
+  namespace: emissary
+spec:
+  port: 8443
+  protocol: HTTPS
+  securityModel: XFP
+  hostBinding:
+    namespace:
+      from: SELF
