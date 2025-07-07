@@ -16,3 +16,13 @@ spec:
   hostname: playeconomy-01.westus.cloudapp.azure.com
   prefix: /catalog-svc/
   service: catalog-service.catalog
+  
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: inventory-mapping
+spec:
+  hostname: playeconomy-01.westus.cloudapp.azure.com
+  prefix: /inventory-svc/
+  service: inventory-service.inventory
