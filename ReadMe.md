@@ -102,3 +102,15 @@ kubectl apply -f ./emissary-ingress/tls-certificate.yaml -n "$namespace"
 ```bash
 kubectl apply -f ./emissary-ingress/host.yaml -n "$namespace"
 ```
+
+## Packaging and pUblishing microservice helm chart 
+```bash 
+helm package ./helm/microservice
+
+helmUser="00000000-0000-0000-0000-000000000000"
+helmPassword=$(az acr login --name playeconomy01acr --expose-token --output tsv --query accessToken)
+helm registry login playeconomy01acr.azurecr.io --username $helmUser --password $helmPassword 
+
+helm push microservice-0.1.0.tgz oci://playeconomy01acr.azurecr.io/helm
+
+```

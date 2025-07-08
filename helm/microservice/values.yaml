@@ -1,4 +1,3 @@
-
 envVariables:
   ServiceSettings__MessageBroker: SERVICEBUS
   ServiceSettings__KeyVaultName: playeconomy-01
