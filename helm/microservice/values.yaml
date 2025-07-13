@@ -1,6 +1,6 @@
 envVariables:
   ServiceSettings__MessageBroker: SERVICEBUS
-  ServiceSettings__KeyVaultName: playeconomy-01
+  ServiceSettings__KeyVaultName: playeconomyapp
     
 resources:
   limits:

@@ -17,32 +17,27 @@ dotnet nuget add source \
 
 ## Creating Azure Resource Group 
 ```bash
-export appname=playeconomy-01
+export appname=playeconomyapp
 az group create --name $appname --location westus
 ```
 
 ## Creating CosmosDB Account 
 ```bash
-export appname=playeconomy-01
-export db=playeconomy-01-db
-az cosmosdb create --name $db --resource-group $appname --kind MongoDB --enable-free-tier
+az cosmosdb create --name $appname --resource-group $appname --kind MongoDB --enable-free-tier
 ```
 
 ## Creating the Service Bus Namespace 
 ```bash 
-export appname=playeconomy-01
 az servicebus namespace create --name $appname --resource-group $appname --sku Standard
 ```
 ## Creating Container Registry 
 ```bash
-export appname=playeconomy-01
-export acr="playeconomy01acr"
-az acr create --name $acr --resource-group $appname --sku Basic
+az acr create --name $appname --resource-group $appname --sku Basic
 ```
 
 ## Creating AKS cluster
 ```bash 
-az aks create -n $appname -g $appname --node-vm-size Standard_B2s --node-count 2 --attach-acr $acr \
+az aks create -n $appname -g $appname --node-vm-size Standard_B2s --node-count 2 --attach-acr $appname \
    --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys
 
 az aks get-credentials --name $appname --resource-group $appname
@@ -113,4 +108,9 @@ helm registry login playeconomy01acr.azurecr.io --username $helmUser --password 
 
 helm push microservice-0.1.0.tgz oci://playeconomy01acr.azurecr.io/helm
 
+```
+
+## Create GitHub service principle 
+```bash
+export appId=$(az ad sp create-for-rbac -n "Github" --query appId --output tsv)
 ```
