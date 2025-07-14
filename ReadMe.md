@@ -114,3 +114,12 @@ helm push microservice-0.1.0.tgz oci://playeconomyapp.azurecr.io/helm
 ```bash
 export appId=$(az ad sp create-for-rbac -n "Github" --query appId --output tsv)
 ```
+
+## Deploying Seq to AKS 
+```bash
+helm repo add datalust https://helm.datalust.co
+helm repo update 
+export pass="[admin password here]"
+helm install seq datalust/seq -n observability --create-namespace --set firstRunAdminPassword=$pass
+
+```
