@@ -58,3 +58,15 @@ spec:
   hostname: playeconomyapp.westus.cloudapp.azure.com
   prefix: /seq/
   service: seq.observability
+  
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: jaeger-mapping
+spec:
+  hostname: playeconomyapp.westus.cloudapp.azure.com
+  prefix: /jaeger/
+  rewrite: ""
+  service: jaeger-query.observability:16686
+  

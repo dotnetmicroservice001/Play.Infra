@@ -123,3 +123,11 @@ export pass="[admin password here]"
 helm install seq datalust/seq -n observability --create-namespace --set firstRunAdminPassword=$pass
 
 ```
+
+### Deploy Jaeger to AKS
+```bash
+helm repo add jaegertracing https://jaegertracing.github.io/helm-charts
+helm repo update 
+helm upgrade jaeger jaegertracing/jaeger --values jaeger/values.yaml -n observability --install
+
+```
