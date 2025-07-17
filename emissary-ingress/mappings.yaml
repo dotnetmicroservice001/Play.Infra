@@ -70,3 +70,22 @@ spec:
   rewrite: ""
   service: jaeger-query.observability:16686
   
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: prometheus-mapping
+spec:
+  hostname: playeconomyapp.westus.cloudapp.azure.com
+  prefix: /prometheus/
+  service: prometheus-operated.observability:9090
+  
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: grafana-mapping
+spec:
+  hostname: playeconomyapp.westus.cloudapp.azure.com
+  prefix: /grafana/
+  service: prometheus-grafana.observability
