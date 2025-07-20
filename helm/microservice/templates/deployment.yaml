@@ -2,16 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "{{.Values.microserviceName}}-deployment"
-  namespace: {{.Values.microserviceName}}
 spec:
   selector:
     matchLabels:
-      app: {{.Values.microserviceName}}
+      app.kubernetes.io/name: {{ .Values.microserviceName }}
   template:
     metadata:
-      name: "{{.Values.microserviceName}}-deployment"
+      name: "{{ .Values.microserviceName }}-deployment"
       labels:
-        app: {{.Values.microserviceName}}
+        app.kubernetes.io/name: {{ .Values.microserviceName }}
         azure.workload.identity/use: "true"
     spec:
       serviceAccountName: "{{.Values.microserviceName}}-serviceaccount"

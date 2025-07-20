@@ -1,12 +1,18 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: "{{.Values.microserviceName}}-servicemonitor"
-  labels: 
-    appType: {{ .Chart.Name }}
-spec: 
-  selector: 
+  name: "{{ .Values.microserviceName }}-servicemonitor"
+  labels:
+    app.kubernetes.io/name: {{ .Values.microserviceName }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  selector:
     matchLabels:
-      appTypes: {{ .Chart.Name}}
-  endpoints: 
-    - port : http 
+      app.kubernetes.io/name: {{ .Values.microserviceName }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 30s
