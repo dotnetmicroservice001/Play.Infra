@@ -12,12 +12,16 @@ resources:
     cpu: "150m"
     
 container:
-  liveness: 
-    path: /health/live
-    initialDelaySeconds: 10 
   readiness:
     path: /health/ready
-    initialDelaySeconds: 10
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    failureThreshold: 3
+  liveness:
+    path: /health/live
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    failureThreshold: 3
   
 service: 
   type: ClusterIP

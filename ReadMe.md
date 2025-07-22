@@ -64,6 +64,7 @@ export namespace=emissary
 helm install emissary-ingress datawire/emissary-ingress --set service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"=$appname --namespace $namespace && \
 kubectl -n $namespace wait --for condition=available --timeout=90s deploy -lapp.kubernetes.io/instance=emissary-ingress
 
+kubectl rollout status deployment/emissary-ingress -n $namespace -w
 kubectl get svc -w  --namespace emissary emissary-ingress
 ```
 
@@ -106,7 +107,7 @@ helmUser="00000000-0000-0000-0000-000000000000"
 helmPassword=$(az acr login --name $appname --expose-token --output tsv --query accessToken)
 helm registry login $appname.azurecr.io --username $helmUser --password $helmPassword 
 
-helm push playmicroservice-0.1.7.tgz oci://playeconomyapp.azurecr.io/helm
+helm push microservice-0.1.6.tgz oci://playeconomyapp.azurecr.io/helm
 
 ```
 
