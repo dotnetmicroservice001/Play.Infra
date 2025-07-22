@@ -107,7 +107,7 @@ helmUser="00000000-0000-0000-0000-000000000000"
 helmPassword=$(az acr login --name $appname --expose-token --output tsv --query accessToken)
 helm registry login $appname.azurecr.io --username $helmUser --password $helmPassword 
 
-helm push microservice-0.1.6.tgz oci://playeconomyapp.azurecr.io/helm
+helm push microservice-0.1.12.tgz oci://playeconomyapp.azurecr.io/helm
 
 ```
 
