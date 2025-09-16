@@ -17,34 +17,39 @@ dotnet nuget add source \
 
 ## Creating Azure Resource Group 
 ```bash
-export appname=playeconomyapp
-az group create --name $appname --location westus
+export RG=rg-playground
+az group create --name $RG --location westus
 ```
 
 ## Creating CosmosDB Account 
 ```bash
-az cosmosdb create --name $appname --resource-group $appname --kind MongoDB --enable-free-tier
+export COSMOS="cosmos-pe"
+az cosmosdb create --name $COSMOS --resource-group $RG --kind MongoDB --enable-free-tier
 ```
 
 ## Creating the Service Bus Namespace 
 ```bash 
-az servicebus namespace create --name $appname --resource-group $appname --sku Standard
+export SB="sb-pf-pos"
+az servicebus namespace create --name $SB --resource-group $RG --sku Standard
 ```
 ## Creating Container Registry 
 ```bash
-az acr create --name $appname --resource-group $appname --sku Basic
+export ACR="acrpfpos"
+az acr create --name $ACR --resource-group $RG --sku Basic
 ```
 
 ## Creating AKS cluster
 ```bash 
-az aks create -n $appname -g $appname --node-vm-size Standard_B2s --node-count 2 --attach-acr $appname \
+export AKS="aks-playground"
+az aks create -n $AKS -g $RG --node-vm-size Standard_B2s --node-count 2 --attach-acr $ACR \
    --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys
 
-az aks get-credentials --name $appname --resource-group $appname
+az aks get-credentials --name $AKS --resource-group $RG
 ```
 ## Creating Azure Key Vault 
 ```bash 
-az keyvault create -n $appname -g $appname 
+export KV="kv-pf-pos"
+az keyvault create -n $KV -g $RG 
 ```
 
 ## Installing Emissary Ingress
@@ -60,6 +65,7 @@ kubectl apply -f https://app.getambassador.io/yaml/emissary/3.9.1/emissary-crds.
 
 kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
 
+export appname=myapp
 export namespace=emissary
 helm install emissary-ingress datawire/emissary-ingress --set service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"=$appname --namespace $namespace && \
 kubectl -n $namespace wait --for condition=available --timeout=90s deploy -lapp.kubernetes.io/instance=emissary-ingress
@@ -104,10 +110,10 @@ kubectl apply -f ./emissary-ingress/host.yaml -n "$namespace"
 helm package ./helm/microservice
 
 helmUser="00000000-0000-0000-0000-000000000000"
-helmPassword=$(az acr login --name $appname --expose-token --output tsv --query accessToken)
-helm registry login $appname.azurecr.io --username $helmUser --password $helmPassword 
+helmPassword=$(az acr login --name $ACR --expose-token --output tsv --query accessToken)
+helm registry login $ACR.azurecr.io --username $helmUser --password $helmPassword 
 
-helm push microservice-0.1.12.tgz oci://playeconomyapp.azurecr.io/helm
+helm push playflow-microservice-0.1.0.tgz oci://acrpfpos.azurecr.io/helm
 
 ```
 

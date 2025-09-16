@@ -3,7 +3,7 @@ kind: Mapping
 metadata:
   name: identity-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /identity-svc/
   service: identity-service.identity
   
@@ -13,7 +13,7 @@ kind: Mapping
 metadata:
   name: catalog-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /catalog-svc/
   service: catalog-service.catalog
   
@@ -23,7 +23,7 @@ kind: Mapping
 metadata:
   name: inventory-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /inventory-svc/
   service: inventory-service.inventory
   
@@ -33,7 +33,7 @@ kind: Mapping
 metadata:
   name: trading-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /trading-svc/
   service: trading-service.trading
   allow_upgrade:
@@ -45,7 +45,7 @@ kind: Mapping
 metadata:
   name: frontend-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /
   service: frontend-client.frontend
   
@@ -55,7 +55,7 @@ kind: Mapping
 metadata:
   name: seq-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /seq/
   service: seq.observability
   
@@ -65,7 +65,7 @@ kind: Mapping
 metadata:
   name: jaeger-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /jaeger/
   rewrite: ""
   service: jaeger-query.observability:16686
@@ -76,7 +76,7 @@ kind: Mapping
 metadata:
   name: prometheus-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /prometheus/
   service: prometheus-operated.observability:9090
   
@@ -86,6 +86,6 @@ kind: Mapping
 metadata:
   name: grafana-mapping
 spec:
-  hostname: playeconomyapp.westus.cloudapp.azure.com
+  hostname: gameplayeconomy.com
   prefix: /grafana/
   service: prometheus-grafana.observability
