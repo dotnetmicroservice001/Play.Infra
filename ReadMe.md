@@ -113,7 +113,7 @@ helmUser="00000000-0000-0000-0000-000000000000"
 helmPassword=$(az acr login --name $ACR --expose-token --output tsv --query accessToken)
 helm registry login $ACR.azurecr.io --username $helmUser --password $helmPassword 
 
-helm push playflow-microservice-0.1.0.tgz oci://acrpfpos.azurecr.io/helm
+helm push playflow-microservice-0.1.2.tgz oci://acrpfpos.azurecr.io/helm
 
 ```
 

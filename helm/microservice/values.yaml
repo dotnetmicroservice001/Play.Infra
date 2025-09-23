@@ -1,3 +1,9 @@
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 0
+    maxUnavailable: 1
+
 envVariables:
   ServiceSettings__MessageBroker: SERVICEBUS
   ServiceSettings__KeyVaultName: kv-pf-pos
@@ -5,23 +11,33 @@ envVariables:
   SeqSettings__Port: 5341
   JaegerSettings__Host: jaeger-query.observability
   JaegerSettings__Port: 6831
-    
+   
 resources:
+  requests:
+    memory: "384Mi"
+    cpu: "300m"
   limits:
-    memory: "128Mi"
-    cpu: "150m"
+    cpu: "1"
+    memory: 1Gi
     
 container:
   readiness:
     path: /health/ready
-    initialDelaySeconds: 15
+    initialDelaySeconds: 30
     periodSeconds: 15
+    timeoutSeconds: 10
     failureThreshold: 3
   liveness:
     path: /health/live
-    initialDelaySeconds: 15
+    initialDelaySeconds: 30
     periodSeconds: 15
+    timeoutSeconds: 10
     failureThreshold: 3
+  startupProbe:
+    path: /health/live
+    failureThreshold: 30
+    periodSeconds: 15
+    timeoutSeconds: 5
   
 service: 
   type: ClusterIP
