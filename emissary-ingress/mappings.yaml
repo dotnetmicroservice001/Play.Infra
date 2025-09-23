@@ -48,8 +48,21 @@ spec:
   hostname: gameplayeconomy.com
   prefix: /
   service: frontend-client.frontend
-  
+
 ---
+# frontend at www
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: frontend-root-www
+  namespace: emissary
+spec:
+  hostname: www.gameplayeconomy.com
+  prefix: /
+  service: frontend-client.frontend  
+---
+
+
 apiVersion: getambassador.io/v3alpha1
 kind: Mapping
 metadata:

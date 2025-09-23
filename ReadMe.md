@@ -1,12 +1,21 @@
 # Play.Infra 
 Play Economy Infrastructure components
+```bash
+export owner=[GIHHUB-PERSONAL-OR-ORG-NAME]"dotnetmicroservice001"
+export gh_pat=[YOUR_PERSONAL_ACCESS_TOKEN]"ghp_"
+export RG=[RESOURCE-GROUP-NAME-HERE]rg-playground
+export COSMOS=[DB-NAME-HERE]"cosmos-pe"
+export SB=[SERVICE-BUS-HERE]"sb-pf-pos"
+export ACR=[CONTAINER-REGISTRY-HERE]"acrpfpos"
+export AKS=[AKS-NAME-HERE]"aks-playground"
+export KV=[KEY-VAULT-NAME]"kv-pf-pos"
+```
+
+
 
 ## Add GitHub Package source 
 
 ```bash 
-owner="dotnetmicroservice001"
-gh_pat="[YOUR_PERSONAL_ACCESS_TOKEN]"
-
 dotnet nuget add source \
   --username "$owner" \
   --password "$gh_pat" \
@@ -17,30 +26,25 @@ dotnet nuget add source \
 
 ## Creating Azure Resource Group 
 ```bash
-export RG=rg-playground
 az group create --name $RG --location westus
 ```
 
 ## Creating CosmosDB Account 
 ```bash
-export COSMOS="cosmos-pe"
 az cosmosdb create --name $COSMOS --resource-group $RG --kind MongoDB --enable-free-tier
 ```
 
 ## Creating the Service Bus Namespace 
 ```bash 
-export SB="sb-pf-pos"
 az servicebus namespace create --name $SB --resource-group $RG --sku Standard
 ```
 ## Creating Container Registry 
 ```bash
-export ACR="acrpfpos"
 az acr create --name $ACR --resource-group $RG --sku Basic
 ```
 
 ## Creating AKS cluster
 ```bash 
-export AKS="aks-playground"
 az aks create -n $AKS -g $RG --node-vm-size Standard_B2s --node-count 2 --attach-acr $ACR \
    --enable-oidc-issuer --enable-workload-identity --generate-ssh-keys
 
@@ -48,7 +52,6 @@ az aks get-credentials --name $AKS --resource-group $RG
 ```
 ## Creating Azure Key Vault 
 ```bash 
-export KV="kv-pf-pos"
 az keyvault create -n $KV -g $RG 
 ```
 
@@ -112,8 +115,9 @@ helm package ./helm/microservice
 helmUser="00000000-0000-0000-0000-000000000000"
 helmPassword=$(az acr login --name $ACR --expose-token --output tsv --query accessToken)
 helm registry login $ACR.azurecr.io --username $helmUser --password $helmPassword 
-
-helm push playflow-microservice-0.1.2.tgz oci://acrpfpos.azurecr.io/helm
+version=1.0.2
+helmchart=playflow-microservice
+helm push $helmchart-$version.tgz oci://$ACR.azurecr.io/helm
 
 ```
 
@@ -143,6 +147,5 @@ helm upgrade jaeger jaegertracing/jaeger --values jaeger/values.yaml -n observab
 ```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update 
-
 helm upgrade prometheus prometheus-community/kube-prometheus-stack --values ./prometheus/values.yaml -n observability --install
 ```
