@@ -1,14 +1,14 @@
 # Play.Infra 
 Play Economy Infrastructure components
 ```bash
-export owner=[GIHHUB-PERSONAL-OR-ORG-NAME]"dotnetmicroservice001"
-export gh_pat=[YOUR_PERSONAL_ACCESS_TOKEN]"ghp_"
-export RG=[RESOURCE-GROUP-NAME-HERE]rg-playground
-export COSMOS=[DB-NAME-HERE]"cosmos-pe"
-export SB=[SERVICE-BUS-HERE]"sb-pf-pos"
-export ACR=[CONTAINER-REGISTRY-HERE]"acrpfpos"
-export AKS=[AKS-NAME-HERE]"aks-playground"
-export KV=[KEY-VAULT-NAME]"kv-pf-pos"
+export owner=[GIHHUB-PERSONAL-OR-ORG-NAME]
+export gh_pat=[YOUR_PERSONAL_ACCESS_TOKEN]
+export RG=[RESOURCE-GROUP-NAME-HERE]
+export COSMOS=[DB-NAME-HERE]
+export SB=[SERVICE-BUS-HERE]
+export ACR=[CONTAINER-REGISTRY-HERE]
+export AKS=[AKS-NAME-HERE]
+export KV=[KEY-VAULT-NAME]
 ```
 
 
