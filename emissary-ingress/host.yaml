@@ -7,8 +7,7 @@ spec:
   hostname: gameplayeconomy.com
   tlsSecret:
     name: playeconomyapp-tls
-  acmeProvider:
-    email: sneha.basnet2@gmail.com
+  
     
 ---
 apiVersion: getambassador.io/v3alpha1
@@ -20,9 +19,4 @@ spec:
   hostname: www.gameplayeconomy.com
   tlsSecret:
     name: playeconomyapp-tls
-  acmeProvider:
-    email: sneha.basnet2@gmail.com
-  requestPolicy:
-    insecure:
-      action: Redirect      # HTTP -> HTTPS
-      additionalPort: 8080
+  
