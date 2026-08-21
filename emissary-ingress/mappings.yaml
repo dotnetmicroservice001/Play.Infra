@@ -101,4 +101,5 @@ metadata:
 spec:
   hostname: gameplayeconomy.com
   prefix: /grafana/
+  rewrite: ""
   service: prometheus-grafana.observability
