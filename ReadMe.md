@@ -11,7 +11,17 @@ export AKS=[AKS-NAME-HERE]
 export KV=[KEY-VAULT-NAME]
 ```
 
-
+## Values used for this deployment
+```bash
+export owner="dotnetmicroservice001"
+export gh_pat="ghp_YourRealPATHere"
+export RG=rg-playground
+export COSMOS="cosmos-pe"
+export SB="sb-pf-pos"
+export ACR="acrpfpos"
+export AKS="aks-playground"
+export KV="kv-pf-pos"
+```
 
 ## Add GitHub Package source 
 
