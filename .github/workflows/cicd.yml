@@ -1,0 +1,73 @@
+name: CICD
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'helm/microservice/**'
+
+jobs:
+
+  generate-version:
+    runs-on: ubuntu-latest
+    permissions:
+     contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Github Tag Bump
+      id: tag_bump
+      uses: anothrNick/github-tag-action@1.67.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        INITIAL_VERSION: 0.1.2
+        DEFAULT_BUMP: patch
+
+    outputs:
+      new-version: ${{ steps.tag_bump.outputs.new_tag }}
+
+  publish-chart:
+   runs-on: ubuntu-latest
+   needs: generate-version
+   env:
+    ACR_NAME: acrpfpos
+
+   permissions:
+    id-token: write
+    contents: read
+
+   steps:
+    - uses: actions/checkout@v4
+
+    - name: Azure Login
+      uses: Azure/login@v2.3.0
+      with:
+       client-id: ${{ secrets.AZURE_CLIENT_ID }}
+       tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+       subscription-id: ${{ secrets.AZURE_SUBSCIPRTION_ID }}
+
+    - name: Helm tool installer
+      uses: Azure/setup-helm@v3
+      with:
+        version: v3.18.3
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Login to Helm Registry
+      run: |
+        helmUser="00000000-0000-0000-0000-000000000000"
+        helmPassword=$(az acr login --name ${{ env.ACR_NAME }} --expose-token --output tsv --query accessToken)
+        helm registry login ${{ env.ACR_NAME }}.azurecr.io --username $helmUser --password $helmPassword
+
+    # Chart.yaml's own `version:` field is left as a placeholder default —
+    # the CI-computed version always overrides it at package time, the same
+    # way the services pass PackageVersion to `dotnet pack` without touching
+    # their csproj. This is what was missing before: the chart's content
+    # changed (JaegerSettings -> OtlpSettings) but nothing ever re-packaged
+    # and pushed a new version to ACR, so every service kept deploying the
+    # stale 0.1.2 that predated the rename.
+    - name: Package and push chart
+      run: |
+        helm package helm/microservice \
+          --version ${{ needs.generate-version.outputs.new-version }} \
+          --app-version ${{ needs.generate-version.outputs.new-version }} \
+          -d ./packaged
+        helm push ./packaged/playflow-microservice-${{ needs.generate-version.outputs.new-version }}.tgz oci://${{ env.ACR_NAME }}.azurecr.io/helm
