@@ -13,9 +13,10 @@ description: installs a PlayEconomy Microservice
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 #type: application
 
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
+# This is the chart version. CI (.github/workflows/cicd.yml) overrides this
+# at package time with an auto-bumped version, the same way each service's
+# csproj version is overridden by `dotnet pack -p:PackageVersion=...` — this
+# field is just the local/manual-packaging fallback.
 version: 0.1.2
 
 # This is the version number of the application being deployed. This version number should be
