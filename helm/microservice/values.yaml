@@ -7,8 +7,6 @@ strategy:
 envVariables:
   ServiceSettings__MessageBroker: SERVICEBUS
   ServiceSettings__KeyVaultName: kv-pf-pos
-  SeqSettings__Host: seq.observability
-  SeqSettings__Port: 5341
   OtlpSettings__Host: jaeger-query.observability
   OtlpSettings__Port: 4317
    
