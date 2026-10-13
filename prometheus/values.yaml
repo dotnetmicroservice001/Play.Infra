@@ -1,0 +1,61 @@
+# kube-prometheus-stack (Helm release "prometheus", namespace "observability", chart 77.6.2).
+# Holds every user-supplied value: `helm upgrade -f` replaces the release's values
+# rather than merging, so anything left out of this file is reset to the chart default.
+#
+#   helm upgrade prometheus prometheus-community/kube-prometheus-stack \
+#     --version 77.6.2 -n observability -f prometheus/values.yaml
+
+alertmanager:
+  alertmanagerSpec:
+    resources:
+      requests:
+        memory: 64Mi
+
+grafana:
+  # Admin credentials come from a secret created out of band (never committed):
+  #   kubectl create secret generic grafana-admin -n observability \
+  #     --from-literal=admin-user=admin --from-literal=admin-password="$(openssl rand -base64 24)"
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+  grafana.ini:
+    server:
+      root_url: https://gameplayeconomy.com/grafana/
+      serve_from_sub_path: true
+    # Public read-only dashboards; admin login still works at /grafana/login
+    auth.anonymous:
+      enabled: true
+      org_name: Main Org.
+      org_role: Viewer
+    users:
+      allow_sign_up: false
+  resources:
+    limits:
+      memory: 350Mi
+    requests:
+      cpu: 50m
+      memory: 150Mi
+  sidecar:
+    resources:
+      limits:
+        memory: 150Mi
+      requests:
+        cpu: 10m
+        memory: 50Mi
+
+kubeApiServer:
+  enabled: false
+
+prometheus:
+  prometheusSpec:
+    externalUrl: /prometheus
+    resources:
+      limits:
+        memory: 700Mi
+      requests:
+        cpu: 100m
+        memory: 250Mi
+    retention: 5d
+    scrapeInterval: 60s
+    serviceMonitorSelectorNilUsesHelmValues: false
